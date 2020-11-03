@@ -7,20 +7,8 @@
             <a href="mailto:name@email.com">name@email.com</a>
           </div>
           <p class="lead mb-5"><?php the_field('summary')?></p>
-          <div class="social-icons">
-            <a href="#">
-              <i class="fab fa-linkedin-in"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-github"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#">
-              <i class="fab fa-facebook-f"></i>
-            </a>
-          </div>
+
+          <?php echo do_shortcode('[socialmedia]')?>
         </div>
       </section>
 

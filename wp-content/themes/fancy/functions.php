@@ -45,4 +45,67 @@ function add_class_to_anchors( $atts ) {
 }
 add_filter( 'nav_menu_link_attributes', 'add_class_to_anchors', 10 );
 
+//[socialmedia]
+function socialmedia_func( $atts ){
+
+    ob_start();
+
+    get_template_part('shortcode/socialmedia');
+
+    return ob_get_clean();
+}
+add_shortcode( 'socialmedia', 'socialmedia_func' );
+
+//[section name=experience]
+function section_func( $atts ){
+
+    ob_start();
+
+ 
+    // The Query
+    $args = array(
+        'post_type'=>'section',
+        'name'=>$atts['name'],
+    );
+    $the_query = new WP_Query( $args );
+        
+    // The Loop
+    while ( $the_query->have_posts() ) {
+        $the_query->the_post();
+
+        $suffix = 'default';
+
+        //check section for type
+        $types = get_the_terms(get_the_ID(),'type');
+
+        if($types != false){
+
+            $type = $types[0];
+            $slug = $type->slug;
+
+            if(locate_template('partials/section/content-type-'.$slug.'.php')){
+            $suffix = 'type-'.$slug;
+            }
+            
+
+        }
+
+        //check section by section-slug
+        $section_slug = get_post_field('post_name');
+        if(locate_template('partials/section/content-'.$section_slug.'.php')){
+            $suffix = $section_slug;
+        }
+
+        get_template_part('partials/section/content', $suffix);
+
+
+    }
+    
+    /* Restore original Post Data */
+    wp_reset_postdata();
+    
+    return ob_get_clean();
+}
+add_shortcode( 'section', 'section_func' );
+
 ?>
