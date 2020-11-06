@@ -24,6 +24,13 @@ function enqueue_function() {
 
 add_action('wp_enqueue_scripts', 'enqueue_function');
 
+//admin mode enqueue
+function admin_enqueue_function() {
+    wp_enqueue_style ( 'font1', 'https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700');
+    wp_enqueue_style ( 'font2', 'https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i');
+}
+add_action( 'admin_enqueue_scripts', 'admin_enqueue_function' );
+
 function register_resources(){
 	//register a menu
     register_nav_menu('main-menu','Main Menu');
